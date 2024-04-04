@@ -48,7 +48,6 @@ public class OverlayService extends Service implements View.OnTouchListener {
     private Integer mStatusBarHeight = -1;
     private Integer mNavigationBarHeight = -1;
     private Resources mResources;
-
     public static final String INTENT_EXTRA_IS_CLOSE_WINDOW = "IsCloseWindow";
 
     private static OverlayService instance;
@@ -86,8 +85,9 @@ public class OverlayService extends Service implements View.OnTouchListener {
             flutterView = null;
         }
         isRunning = false;
-        NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(OverlayConstants.NOTIFICATION_ID);
+        // Not use this.
+        // NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        // notificationManager.cancel(OverlayConstants.NOTIFICATION_ID);
         instance = null;
     }
 
@@ -297,27 +297,30 @@ public class OverlayService extends Service implements View.OnTouchListener {
 
     @Override
     public void onCreate() {
-        createNotificationChannel();
-        Intent notificationIntent = new Intent(this, FlutterOverlayWindowPlugin.class);
-        int pendingFlags;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-            pendingFlags = PendingIntent.FLAG_IMMUTABLE;
-        } else {
-            pendingFlags = PendingIntent.FLAG_UPDATE_CURRENT;
-        }
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                0, notificationIntent, pendingFlags);
-        final int notifyIcon = getDrawableResourceId("mipmap", "launcher");
-        Notification notification = new NotificationCompat.Builder(this, OverlayConstants.CHANNEL_ID)
-                .setContentTitle(WindowSetup.overlayTitle)
-                .setContentText(WindowSetup.overlayContent)
-                .setSmallIcon(notifyIcon == 0 ? R.drawable.notification_icon : notifyIcon)
-                .setContentIntent(pendingIntent)
-                .setVisibility(WindowSetup.notificationVisibility)
-                .setFullScreenIntent(pendingIntent, true)
-                .setAutoCancel(true)
-                .build();
-        startForeground(OverlayConstants.NOTIFICATION_ID, notification);
+//        createNotificationChannel();
+//        Intent notificationIntent = new Intent(this, FlutterOverlayWindowPlugin.class);
+//        int pendingFlags;
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+//            pendingFlags = PendingIntent.FLAG_IMMUTABLE;
+//        } else {
+//            pendingFlags = PendingIntent.FLAG_UPDATE_CURRENT;
+//        }
+//        PendingIntent pendingIntent = PendingIntent.getActivity(this,
+//                0, notificationIntent, pendingFlags);
+//        final int notifyIcon = getDrawableResourceId("mipmap", "launcher");
+//        Notification notification = new NotificationCompat.Builder(this, OverlayConstants.CHANNEL_ID)
+//                .setContentTitle(WindowSetup.overlayTitle)
+//                .setContentText(WindowSetup.overlayContent)
+//                .setSmallIcon(notifyIcon == 0 ? R.drawable.notification_icon : notifyIcon)
+//                .setContentIntent(pendingIntent)
+//                .setVisibility(WindowSetup.notificationVisibility)
+//                .setFullScreenIntent(pendingIntent, true)
+//                .setAutoCancel(true)
+//                .build();
+//
+//        startForeground(OverlayConstants.NOTIFICATION_ID, notification);
+//        Intent broadcastIntent = new Intent("flutter.overlay.window.flutter_overlay_window.SET_SHOW_WHEN_LOCKED");
+//        sendBroadcast(broadcastIntent);
         instance = this;
     }
 

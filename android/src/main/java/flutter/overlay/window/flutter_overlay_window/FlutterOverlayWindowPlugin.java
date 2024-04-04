@@ -107,8 +107,6 @@ public class FlutterOverlayWindowPlugin implements
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             intent.putExtra("startX", startX);
             intent.putExtra("startY", startY);
-            mActivity.setShowWhenLocked(true);
-            mActivity.setTurnScreenOn(true);
             context.startService(intent);
             result.success(null);
         } else if (call.method.equals("isOverlayActive")) {
